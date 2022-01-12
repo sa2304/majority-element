@@ -1,3 +1,4 @@
+#include <algorithm>
 #include <cassert>
 #include <iostream>
 #include <vector>
@@ -7,7 +8,29 @@ using namespace std;
 class Solution {
  public:
   int majorityElement(vector<int> &nums) {
-    // FIXME
+    if (not nums.empty()) {
+      sort(nums.begin(), nums.end());
+      int major = nums.front();
+      int max_length = 1;
+      int length = 1;
+      for (int i = 1; i < nums.size(); ++i) {
+        if (nums[i] == nums[i - 1]) {
+          ++length;
+        } else {
+          if (max_length < length) {
+            max_length = length;
+            major = nums[i - 1];
+          }
+          length = 1;
+        }
+      }
+      if (max_length < length) {
+        major = nums.back();
+      }
+
+      return major;
+    }
+
     return 0;
   }
 };
